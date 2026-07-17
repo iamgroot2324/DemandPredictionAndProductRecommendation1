@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # E-Commerce ML Platform
 
 A full-stack application combining React frontend, Node.js backend, and Python ML models for demand prediction and product recommendations.
@@ -290,3 +291,6 @@ ISC
 ## Support
 
 For issues or questions, please check the test files for usage examples or review the API endpoint documentation above.
+=======
+# DemandPredictionAndProductRecommendation1
+>>>>>>> 2ca31629721ba16cb62a2008236a5b2895c81356
