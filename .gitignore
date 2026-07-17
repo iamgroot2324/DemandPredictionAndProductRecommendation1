@@ -1,0 +1,31 @@
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Backend
+node-backend/node_modules
+node-backend/package-lock.json
+node-backend/.DS_Store
+
+# Frontend
+react-frontend/node_modules
+react-frontend/build
+react-frontend/npm-debug.log
+react-frontend/.DS_Store
+
+# Python
+python-ml/__pycache__
+python-ml/*.pyc
+python-ml/venv
+python-ml/.DS_Store
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db

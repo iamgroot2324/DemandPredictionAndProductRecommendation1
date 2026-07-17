@@ -1,21 +1,178 @@
+:root {
+    color-scheme: dark;
+    --bg: #07111f;
+    --panel: rgba(255, 255, 255, 0.86);
+    --panel-strong: #ffffff;
+    --text: #132238;
+    --muted: #65748b;
+    --accent: #e94560;
+    --accent-2: #0f3460;
+    --border: rgba(109, 128, 153, 0.24);
+}
+
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
-body {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI",
-                 Roboto, Oxygen, sans-serif;
-    background-color: #ffffff;
-    color: #1a1a2e;
+html {
+    scroll-behavior: smooth;
 }
 
-input:focus {
-    border-color: #e94560 !important;
-    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, sans-serif;
+    background: radial-gradient(circle at top left, rgba(233, 69, 96, 0.22), transparent 24%),
+                linear-gradient(135deg, #f6f8ff 0%, #eef3ff 45%, #f8fbff 100%);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+body, #root {
+    min-height: 100vh;
+}
+
+input, button, select, textarea {
+    font: inherit;
+}
+
+button {
+    transition: transform 0.18s ease, box-shadow 0.18s ease, opacity 0.18s ease;
 }
 
 button:hover {
-    opacity: 0.9;
+    opacity: 0.96;
+    transform: translateY(-1px);
+}
+
+input:focus {
+    border-color: var(--accent) !important;
+    box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.14);
+    outline: none;
+}
+
+::selection {
+    background: rgba(233, 69, 96, 0.18);
+    color: #101a28;
+}
+
+.app-shell {
+    position: relative;
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+.app-glow {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.28;
+    pointer-events: none;
+    z-index: 0;
+}
+
+.app-glow-1 {
+    width: 280px;
+    height: 280px;
+    top: -60px;
+    left: -80px;
+    background: #ff5e7a;
+    animation: drift 10s ease-in-out infinite alternate;
+}
+
+.app-glow-2 {
+    width: 320px;
+    height: 320px;
+    bottom: -100px;
+    right: -90px;
+    background: #53a5ff;
+    animation: drift 12s ease-in-out infinite alternate-reverse;
+}
+
+.app-body {
+    display: flex;
+    min-height: 100vh;
+    position: relative;
+    z-index: 1;
+}
+
+.app-main {
+    position: relative;
+    z-index: 1;
+    flex: 1;
+    padding: 24px 20px 40px;
+    min-height: 100vh;
+    margin-left: 0;
+}
+
+.sidebar-hover-zone {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 100vh;
+    z-index: 250;
+    background: transparent;
+}
+
+.navbar,
+.sidebar-panel,
+.auth-card,
+.dashboard-hero,
+.stat-card,
+.feature-card,
+.tech-section {
+    animation: floatIn 0.5s ease both;
+}
+
+.feature-card:hover,
+.stat-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 16px 35px rgba(15, 52, 96, 0.12);
+}
+
+@keyframes drift {
+    from {
+        transform: translate3d(0, 0, 0) scale(1);
+    }
+    to {
+        transform: translate3d(24px, 20px, 0) scale(1.06);
+    }
+}
+
+@keyframes floatIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 900px) {
+    .app-main {
+        padding: 16px 14px 32px;
+    }
+
+    .dashboard-hero {
+        padding: 28px 18px 24px;
+    }
+}
+
+@media (max-width: 640px) {
+    .app-main {
+        padding: 12px 10px 24px;
+    }
+
+    .navbar {
+        padding: 12px 14px;
+        gap: 10px;
+    }
+
+    .navbar-links {
+        width: 100%;
+        justify-content: flex-start;
+    }
 }

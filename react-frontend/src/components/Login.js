@@ -1,14 +1,14 @@
 // src/components/Login.js
-import { useState }   from "react"
-import { useAuth }    from "../context/AuthContext"
-import axios          from "axios"
+import { useState } from "react"
+import { useAuth } from "../context/AuthContext"
+import axios from "axios"
 
 function Login({ onSwitch, onSuccess }) {
-    const { login }               = useAuth()
-    const [email,    setEmail]    = useState("")
+    const { login } = useAuth()
+    const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
-    const [error,    setError]    = useState(null)
-    const [loading,  setLoading]  = useState(false)
+    const [error, setError] = useState(null)
+    const [loading, setLoading] = useState(false)
 
     const handleLogin = async () => {
         if (!email || !password) {
@@ -33,11 +33,9 @@ function Login({ onSwitch, onSuccess }) {
 
     return (
         <div style={styles.page}>
-            <div style={styles.card}>
+            <div style={styles.card} className="auth-card">
                 <h1 style={styles.brand}>DPPRS</h1>
-                <p style={styles.sub}>
-                    Demand Prediction & Product Recommendation
-                </p>
+                <p style={styles.sub}>Demand Prediction & Product Recommendation</p>
                 <h2 style={styles.title}>Sign In</h2>
 
                 <input
@@ -67,7 +65,7 @@ function Login({ onSwitch, onSuccess }) {
                 </button>
 
                 <p style={styles.switchText}>
-                    Don't have an account?{" "}
+                    Don&apos;t have an account?{" "}
                     <span style={styles.link} onClick={onSwitch}>
                         Register
                     </span>
@@ -78,16 +76,16 @@ function Login({ onSwitch, onSuccess }) {
 }
 
 const styles = {
-    page:       { minHeight: "100vh", backgroundColor: "#0D1117", display: "flex", alignItems: "center", justifyContent: "center" },
-    card:       { backgroundColor: "#1a1a2e", padding: "48px 40px", borderRadius: "16px", width: "100%", maxWidth: "420px", boxShadow: "0 20px 60px rgba(0,0,0,0.5)" },
-    brand:      { color: "#e94560", fontSize: "28px", fontWeight: "bold", textAlign: "center", marginBottom: "4px" },
-    sub:        { color: "#8892A4", fontSize: "11px", textAlign: "center", marginBottom: "32px" },
-    title:      { color: "white", fontSize: "22px", fontWeight: "bold", marginBottom: "24px" },
-    input:      { width: "100%", padding: "12px 16px", marginBottom: "16px", backgroundColor: "#0D1117", border: "1px solid #2a2a4a", borderRadius: "8px", color: "white", fontSize: "15px", outline: "none", boxSizing: "border-box" },
-    error:      { color: "#e94560", fontSize: "13px", marginBottom: "12px" },
-    btn:        { width: "100%", padding: "14px", backgroundColor: "#e94560", color: "white", border: "none", borderRadius: "8px", fontSize: "16px", fontWeight: "bold", cursor: "pointer", marginBottom: "20px" },
-    switchText: { color: "#8892A4", fontSize: "14px", textAlign: "center" },
-    link:       { color: "#e94560", cursor: "pointer", fontWeight: "bold" }
+    page: { minHeight: "100vh", background: "linear-gradient(135deg, rgba(7,17,31,.96), rgba(15,52,96,.92))", display: "flex", alignItems: "center", justifyContent: "center", padding: "24px" },
+    card: { background: "rgba(255,255,255,0.94)", padding: "44px 36px", borderRadius: "22px", width: "100%", maxWidth: "430px", boxShadow: "0 24px 70px rgba(7, 17, 31, 0.28)", border: "1px solid rgba(255,255,255,0.55)" },
+    brand: { color: "#e94560", fontSize: "30px", fontWeight: "800", textAlign: "center", marginBottom: "6px" },
+    sub: { color: "#6c7a92", fontSize: "12px", textAlign: "center", marginBottom: "28px" },
+    title: { color: "#132238", fontSize: "22px", fontWeight: "800", marginBottom: "20px" },
+    input: { width: "100%", padding: "12px 14px", marginBottom: "14px", backgroundColor: "#f7f9fc", border: "1px solid #dce4f0", borderRadius: "11px", color: "#132238", fontSize: "15px", outline: "none", boxSizing: "border-box" },
+    error: { color: "#e94560", fontSize: "13px", marginBottom: "10px" },
+    btn: { width: "100%", padding: "13px 14px", background: "linear-gradient(135deg, #e94560, #ff6b6b)", color: "white", border: "none", borderRadius: "11px", fontSize: "15px", fontWeight: "700", cursor: "pointer", marginBottom: "18px" },
+    switchText: { color: "#6c7a92", fontSize: "14px", textAlign: "center" },
+    link: { color: "#e94560", cursor: "pointer", fontWeight: "700" }
 }
 
 export default Login

@@ -1,62 +1,134 @@
 // src/services/api.js
-// Central place for all API calls.
+// Central place for all API calls with error handling.
 // Components never call fetch/axios directly — they use these functions.
 
 import axios from "axios"
 
-const NODE_API = "http://localhost:4000"
+const NODE_API = process.env.REACT_APP_API_URL || "http://localhost:4000"
 
-// Demand Prediction 
+// ── Axios Instance with Interceptors ─────────────────────────────────────────
+
+const axiosInstance = axios.create({ baseURL: NODE_API })
+
+axiosInstance.interceptors.request.use(
+    (config) => {
+        const token = localStorage.getItem("token")
+        if (token) {
+            config.headers.Authorization = `Bearer ${token}`
+        }
+        return config
+    },
+    (error) => Promise.reject(error)
+)
+
+axiosInstance.interceptors.response.use(
+    (response) => response,
+    (error) => {
+        if (error.response?.status === 401) {
+            // Token expired or invalid — logout
+            localStorage.removeItem("token")
+            localStorage.removeItem("user")
+            window.location.href = "/login"
+        }
+        return Promise.reject(error)
+    }
+)
+
+// ── Helper Function for Error Handling ───────────────────────────────────────
+
+const handleError = (error, context = "Request") => {
+    const message = error.response?.data?.error || error.message || `${context} failed`
+    console.error(`${context} error:`, message)
+    throw new Error(message)
+}
+
+// ── Demand Prediction ────────────────────────────────────────────────────────
 
 export const predictDemand = async (price) => {
-    const response = await axios.post(`${NODE_API}/ml/predict`, { price })
-    return response.data
+    try {
+        const response = await axiosInstance.post("/ml/predict", { price })
+        return response.data
+    } catch (error) {
+        handleError(error, "Demand prediction")
+    }
 }
 
 export const predictBatch = async (prices) => {
-    const response = await axios.post(`${NODE_API}/ml/predict/batch`, { prices })
-    return response.data
+    try {
+        const response = await axiosInstance.post("/ml/predict/batch", { prices })
+        return response.data
+    } catch (error) {
+        handleError(error, "Batch prediction")
+    }
 }
 
-// Recommendations 
+// ── Recommendations ─────────────────────────────────────────────────────────
 
 export const recommendForUser = async (customerName) => {
-    const response = await axios.post(`${NODE_API}/ml/recommend/user`, {
-        customer_name: customerName
-    })
-    return response.data
+    try {
+        const response = await axiosInstance.post("/ml/recommend/user", {
+            customer_name: customerName
+        })
+        return response.data
+    } catch (error) {
+        handleError(error, "User recommendations")
+    }
 }
 
 export const recommendSimilarProducts = async (productCode) => {
-    const response = await axios.post(`${NODE_API}/ml/recommend/product`, {
-        product_code: productCode
-    })
-    return response.data
+    try {
+        const response = await axiosInstance.post("/ml/recommend/product", {
+            product_code: productCode
+        })
+        return response.data
+    } catch (error) {
+        handleError(error, "Product recommendations")
+    }
 }
 
-//  Products & Customers
+// ── Products & Customers ───────────────────────────────────────────────────
 
 export const getAllProducts = async () => {
-    const response = await axios.get(`${NODE_API}/products`)
-    return response.data
+    try {
+        const response = await axiosInstance.get("/products")
+        return response.data
+    } catch (error) {
+        handleError(error, "Fetch products")
+    }
 }
 
 export const getLaptops = async () => {
-    const response = await axios.get(`${NODE_API}/products/filter/laptops`)
-    return response.data
+    try {
+        const response = await axiosInstance.get("/products/filter/laptops")
+        return response.data
+    } catch (error) {
+        handleError(error, "Fetch laptops")
+    }
 }
 
 export const getPhones = async () => {
-    const response = await axios.get(`${NODE_API}/products/filter/phones`)
-    return response.data
+    try {
+        const response = await axiosInstance.get("/products/filter/phones")
+        return response.data
+    } catch (error) {
+        handleError(error, "Fetch phones")
+    }
 }
 
 export const getAllCustomers = async () => {
-    const response = await axios.get(`${NODE_API}/customers`)
-    return response.data
+    try {
+        const response = await axiosInstance.get("/customers")
+        return response.data
+    } catch (error) {
+        handleError(error, "Fetch customers")
+    }
 }
 
 export const getModelInfo = async () => {
-    const response = await axios.get(`${NODE_API}/ml/model/info`)
-    return response.data
+    try {
+        const response = await axiosInstance.get("/ml/model/info")
+        return response.data
+    } catch (error) {
+        handleError(error, "Fetch model info")
+    }
 }
